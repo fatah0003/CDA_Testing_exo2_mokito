@@ -13,24 +13,41 @@ public class Hangman {
     }
 
     public boolean guess(char letter) {
-        return false;
+        if (wordToGuess.indexOf(letter) >= 0) {
+            guessedLetters.add(letter);
+            return true;
+        } else {
+            remainingAttempts--;
+            return false;
+        }
     }
 
     public String getMaskedWord() {
-
-        return "null";
+        StringBuilder masked = new StringBuilder();
+        for (char c : wordToGuess.toCharArray()) {
+            if (guessedLetters.contains(c)) {
+                masked.append(c);
+            } else {
+                masked.append('_');
+            }
+        }
+        return masked.toString();
     }
 
     public boolean isGameWon() {
-
-        return false;
+        for (char c : wordToGuess.toCharArray()) {
+            if (!guessedLetters.contains(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isGameOver() {
-        return false;
+        return remainingAttempts <= 0 || isGameWon();
     }
 
     public int getRemainingAttempts() {
-        return 0;
+        return remainingAttempts;
     }
 }
